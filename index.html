@@ -1,1 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damru – Rhythm of Innovation</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --indigo: #1A1040;
+    --saffron: #F5A623;
+    --ivory: #FAF8F4;
+    --slate: #4A4560;
+    --rose: #E8D5F0;
+    --light: #F0EDF8;
+    --white: #ffffff;
+    --text: #2A2340;
+    --muted: #7A7390;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--text); overflow-x: hidden; }
 
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: rgba(250,248,244,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(26,16,64,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo span { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--indigo); letter-spacing: -0.5px; }
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+  .nav-links a {
+    font-size: 0.88rem; font-weight: 500; color: var(--slate); text-decoration: none;
+    padding: 6px 14px; border-radius: 20px; transition: background 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { background: var(--light); color: var(--indigo); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .btn-ghost {
+    font-size: 0.88rem; font-weight: 500; color: var(--indigo); text-decoration: none;
+    padding: 7px 18px; border-radius: 20px; border: 1.5px solid rgba(26,16,64,0.2);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--indigo); background: var(--light); }
+  .btn-primary {
+    font-size: 0.88rem; font-weight: 600; color: var(--white); text-decoration: none;
+    padding: 8px 20px; border-radius: 20px; background: var(--indigo);
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 100px 24px 60px; position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, #e4d8ff 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 70%, #ffe5b4 0%, transparent 60%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white); border: 1px solid rgba(245,166,35,0.4);
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 28px;
+  }
+  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--saffron); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+  h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1.08;
+    color: var(--indigo); letter-spacing: -1.5px; margin-bottom: 22px;
+  }
+  h1 em { font-style: normal; color: var(--saffron); }
+  .hero-sub {
+    font-size: 1.12rem; font-weight: 400; color: var(--slate); line-height: 1.7;
+    max-width: 560px; margin: 0 auto 36px;
+  }
+  .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-primary {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem;
+    color: var(--white); background: var(--indigo); padding: 13px 30px;
+    border-radius: 28px; text-decoration: none;
+    box-shadow: 0 4px 24px rgba(26,16,64,0.22);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(26,16,64,0.3); }
+  .cta-secondary {
+    font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.95rem;
+    color: var(--indigo); background: var(--white); padding: 13px 30px;
+    border-radius: 28px; text-decoration: none;
+    border: 1.5px solid rgba(26,16,64,0.15);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .cta-secondary:hover { border-color: var(--indigo); transform: translateY(-2px); }
+
+  /* Damru SVG animation */
+  .damru-mark {
+    width: 90px; height: 90px; margin: 48px auto 0;
+    animation: drumSpin 6s ease-in-out infinite;
+  }
+  @keyframes drumSpin {
+    0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)}
+  }
+
+  /* ── STATS ── */
+  .stats {
+    background: var(--indigo); color: var(--white);
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 44px 32px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 2.4rem; color: var(--saffron); letter-spacing: -1px;
+  }
+  .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-top: 6px; font-weight: 400; }
+
+  /* ── SECTIONS SHARED ── */
+  section { padding: 96px 40px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--saffron); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--indigo);
+    letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 16px;
+  }
+  .section-body { font-size: 1.02rem; color: var(--slate); line-height: 1.75; max-width: 560px; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--ivory); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .about-visual {
+    background: linear-gradient(135deg, #e4d8ff 0%, #ffe8b0 100%);
+    border-radius: 24px; aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+  }
+  .about-visual-inner { text-align: center; }
+  .about-visual-inner p {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 3rem;
+    color: var(--indigo); letter-spacing: -2px;
+  }
+  .about-visual-inner span { font-size: 0.85rem; color: var(--slate); font-weight: 500; }
+  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
+  .value-chip {
+    background: var(--white); border: 1px solid rgba(26,16,64,0.08);
+    border-radius: 12px; padding: 16px 18px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .value-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .value-text h4 { font-size: 0.88rem; font-weight: 600; color: var(--indigo); margin-bottom: 3px; }
+  .value-text p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── PRODUCTS ── */
+  #products { background: var(--light); }
+  .products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+  .product-card {
+    background: var(--white); border-radius: 20px; padding: 32px 28px;
+    border: 1px solid rgba(26,16,64,0.07);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(26,16,64,0.1); }
+  .product-icon {
+    width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  }
+  .product-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.12rem; color: var(--indigo); margin-bottom: 10px; }
+  .product-card p { font-size: 0.88rem; color: var(--slate); line-height: 1.65; }
+  .product-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 18px; font-size: 0.84rem; font-weight: 600; color: var(--indigo); text-decoration: none; transition: gap 0.2s; }
+  .product-link:hover { gap: 9px; }
+
+  /* ── CAREERS ── */
+  #careers { background: var(--ivory); }
+  .careers-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 72px; align-items: start; margin-top: 56px; }
+  .careers-left {}
+  .careers-perks { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+  .perk { display: flex; align-items: flex-start; gap: 14px; }
+  .perk-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--rose); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .perk-text h4 { font-size: 0.9rem; font-weight: 600; color: var(--indigo); }
+  .perk-text p { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+  .job-list { display: flex; flex-direction: column; gap: 14px; }
+  .job-card {
+    background: var(--white); border: 1px solid rgba(26,16,64,0.08); border-radius: 16px;
+    padding: 22px 24px; display: flex; align-items: center; justify-content: space-between;
+    transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer;
+  }
+  .job-card:hover { border-color: var(--indigo); box-shadow: 0 4px 20px rgba(26,16,64,0.08); }
+  .job-info h4 { font-size: 0.96rem; font-weight: 600; color: var(--indigo); }
+  .job-meta { display: flex; gap: 10px; margin-top: 6px; }
+  .tag {
+    font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 12px;
+    background: var(--light); color: var(--slate);
+  }
+  .tag.remote { background: #e8f5e9; color: #2e7d32; }
+  .tag.hybrid { background: #fff8e1; color: #f57c00; }
+  .apply-btn {
+    background: var(--indigo); color: var(--white); border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.82rem;
+    padding: 9px 18px; border-radius: 20px; white-space: nowrap;
+    transition: opacity 0.2s; text-decoration: none;
+  }
+  .apply-btn:hover { opacity: 0.82; }
+
+  /* ── APPLY MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(10,6,30,0.55); z-index: 200;
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 24px; padding: 44px 40px;
+    max-width: 540px; width: 100%; position: relative;
+    box-shadow: 0 32px 80px rgba(10,6,30,0.2); animation: modalIn 0.25s ease;
+    max-height: 90vh; overflow-y: auto;
+  }
+  @keyframes modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .modal-close {
+    position: absolute; top: 18px; right: 20px; background: none; border: none;
+    font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1;
+  }
+  .modal h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--indigo); margin-bottom: 6px; }
+  .modal-role { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--slate); margin-bottom: 7px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 11px 14px; border-radius: 10px;
+    border: 1.5px solid rgba(26,16,64,0.14); font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; color: var(--text); background: var(--ivory);
+    transition: border-color 0.2s; outline: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--indigo); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .upload-area {
+    border: 2px dashed rgba(26,16,64,0.18); border-radius: 10px;
+    padding: 22px; text-align: center; cursor: pointer; transition: border-color 0.2s;
+    background: var(--ivory);
+  }
+  .upload-area:hover { border-color: var(--indigo); }
+  .upload-area p { font-size: 0.84rem; color: var(--muted); }
+  .upload-area p strong { color: var(--indigo); }
+  .form-submit {
+    width: 100%; padding: 13px; background: var(--indigo); color: var(--white);
+    border: none; border-radius: 12px; font-family: 'Inter', sans-serif;
+    font-weight: 600; font-size: 0.95rem; cursor: pointer; margin-top: 8px;
+    transition: opacity 0.2s;
+  }
+  .form-submit:hover { opacity: 0.87; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--indigo); color: var(--white); }
+  #contact .section-title { color: var(--white); }
+  #contact .section-body { color: rgba(255,255,255,0.65); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+  .contact-details { display: flex; flex-direction: column; gap: 22px; margin-top: 36px; }
+  .contact-item { display: flex; align-items: flex-start; gap: 16px; }
+  .contact-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(245,166,35,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .contact-item-text h4 { font-size: 0.84rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .contact-item-text p, .contact-item-text a { font-size: 0.95rem; color: var(--white); text-decoration: none; }
+  .contact-form { background: rgba(255,255,255,0.06); border-radius: 20px; padding: 36px 32px; border: 1px solid rgba(255,255,255,0.1); }
+  .contact-form .form-group label { color: rgba(255,255,255,0.65); }
+  .contact-form input, .contact-form textarea {
+    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.12);
+    color: var(--white);
+  }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--saffron); }
+  .contact-submit {
+    width: 100%; padding: 13px; background: var(--saffron); color: var(--indigo);
+    border: none; border-radius: 12px; font-family: 'Inter', sans-serif;
+    font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: opacity 0.2s;
+  }
+  .contact-submit:hover { opacity: 0.87; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #100928; color: rgba(255,255,255,0.45);
+    padding: 48px 40px 32px;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+  .footer-brand { }
+  .footer-brand .logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .footer-brand .logo-wrap span { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--white); }
+  .footer-brand p { font-size: 0.84rem; line-height: 1.65; }
+  .footer-col h5 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); margin-bottom: 14px; }
+  .footer-col a { display: block; font-size: 0.86rem; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 9px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.8rem; }
+  .social-links { display: flex; gap: 14px; }
+  .social-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.84rem; transition: color 0.2s; }
+  .social-links a:hover { color: var(--white); }
+
+  /* ── SUCCESS MSG ── */
+  .success-msg { background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 10px; padding: 14px 18px; font-size: 0.88rem; color: #2e7d32; font-weight: 500; display: none; margin-top: 14px; }
+  .success-msg.show { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .about-grid, .careers-layout, .contact-grid, .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
+    .about-values { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .modal { padding: 30px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="15" fill="#1A1040"/>
+      <ellipse cx="10" cy="16" rx="5" ry="8" fill="#F5A623" opacity="0.9"/>
+      <ellipse cx="22" cy="16" rx="5" ry="8" fill="#F5A623" opacity="0.9"/>
+      <rect x="14.5" y="8" width="3" height="16" rx="1.5" fill="#FAF8F4"/>
+      <circle cx="16" cy="16" r="2.5" fill="#FAF8F4"/>
+    </svg>
+    <span>Damru</span>
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#products">Products</a>
+    <a href="#careers">Careers</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+    <a href="#careers" class="btn-primary">Join Us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span></span> Now hiring across 5 countries
+    </div>
+    <h1>The <em>Rhythm</em><br>of Modern Innovation</h1>
+    <p class="hero-sub">Damru builds technology that connects people, amplifies ideas, and keeps the world moving — like the ancient beat that set the universe in motion.</p>
+    <div class="hero-ctas">
+      <a href="#products" class="cta-primary">Explore Our Products</a>
+      <a href="#about" class="cta-secondary">Our Story →</a>
+    </div>
+    <!-- Animated Damru Mark -->
+    <svg class="damru-mark" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="28" cy="45" rx="18" ry="30" fill="#1A1040"/>
+      <ellipse cx="62" cy="45" rx="18" ry="30" fill="#1A1040"/>
+      <rect x="41" y="18" width="8" height="54" rx="4" fill="#F5A623"/>
+      <ellipse cx="45" cy="45" rx="7" ry="7" fill="#FAF8F4"/>
+      <!-- Strings -->
+      <path d="M28 45 Q45 30 62 45" stroke="#F5A623" stroke-width="2" stroke-dasharray="3 3" fill="none"/>
+      <path d="M28 45 Q45 60 62 45" stroke="#F5A623" stroke-width="2" stroke-dasharray="3 3" fill="none"/>
+      <circle cx="20" cy="38" r="4" fill="#F5A623"/>
+      <circle cx="70" cy="52" r="4" fill="#F5A623"/>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">12M+</div>
+    <div class="stat-label">Active Users</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">40+</div>
+    <div class="stat-label">Countries Served</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">$2.4B</div>
+    <div class="stat-label">Valuation</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3,200</div>
+    <div class="stat-label">Team Members</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-visual-inner">
+          <p>2014</p>
+          <span>Founded in Mumbai, India</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-eyebrow">Our Story</div>
+        <h2 class="section-title">Built on a single belief: great ideas deserve great tools</h2>
+        <p class="section-body">Damru was founded in 2014 in Mumbai with a small team of eight engineers and one big conviction — that the most powerful technologies should be accessible to everyone, not just the few. We named ourselves after the damru, Shiva's hand-drum whose rhythm is said to have created language, music, and time itself. That sense of foundational energy is what we bring to every product we build.</p>
+        <p class="section-body" style="margin-top:16px;">Today we operate across four continents, powering communication, productivity, and commerce for millions of individuals and businesses worldwide.</p>
+        <div class="about-values">
+          <div class="value-chip">
+            <div class="value-icon">🥁</div>
+            <div class="value-text"><h4>Bold by Default</h4><p>We move fast, iterate openly, and embrace change.</p></div>
+          </div>
+          <div class="value-chip">
+            <div class="value-icon">🌍</div>
+            <div class="value-text"><h4>Global Mindset</h4><p>Built for every language, culture, and connection.</p></div>
+          </div>
+          <div class="value-chip">
+            <div class="value-icon">🔒</div>
+            <div class="value-text"><h4>Privacy First</h4><p>Your data belongs to you — always has, always will.</p></div>
+          </div>
+          <div class="value-chip">
+            <div class="value-icon">✨</div>
+            <div class="value-text"><h4>Craft Obsessed</h4><p>We sweat every detail so you don't have to.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-inner">
+    <div class="section-eyebrow">What We Build</div>
+    <h2 class="section-title">Products that keep you in rhythm</h2>
+    <p class="section-body">From individual creators to Fortune 500 enterprises, our suite covers everything from real-time communication to AI-powered analytics.</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-icon" style="background:#ede7f6;">💬</div>
+        <h3>Damru Connect</h3>
+        <p>Real-time messaging and video collaboration built for the way modern teams actually work — async-first, beautifully organised, and lightning fast.</p>
+        <a href="#" class="product-link">Learn more →</a>
+      </div>
+      <div class="product-card">
+        <div class="product-icon" style="background:#e8f5e9;">📊</div>
+        <h3>Damru Pulse</h3>
+        <p>AI-powered analytics that turns raw business data into clear decisions. Set goals, track KPIs, and let Pulse surface what matters before you ask.</p>
+        <a href="#" class="product-link">Learn more →</a>
+      </div>
+      <div class="product-card">
+        <div class="product-icon" style="background:#fff8e1;">🛒</div>
+        <h3>Damru Commerce</h3>
+        <p>End-to-end infrastructure for digital commerce — from storefronts and checkout to logistics, payments, and post-purchase experiences.</p>
+        <a href="#" class="product-link">Learn more →</a>
+      </div>
+      <div class="product-card">
+        <div class="product-icon" style="background:#fce4ec;">🔐</div>
+        <h3>Damru Shield</h3>
+        <p>Enterprise-grade security and identity management. Multi-factor auth, SSO, audit logs, and zero-trust architecture in one unified dashboard.</p>
+        <a href="#" class="product-link">Learn more →</a>
+      </div>
+      <div class="product-card">
+        <div class="product-icon" style="background:#e3f2fd;">☁️</div>
+        <h3>Damru Cloud</h3>
+        <p>Flexible compute, storage, and deployment infrastructure with 99.99% SLA uptime. Scale globally without ops overhead.</p>
+        <a href="#" class="product-link">Learn more →</a>
+      </div>
+      <div class="product-card">
+        <div class="product-icon" style="background:#f3e5f5;">🤖</div>
+        <h3>Damru AI</h3>
+        <p>Our foundational AI platform. Deploy custom models, automate workflows, and build intelligent products on top of Damru's AI APIs.</p>
+        <a href="#" class="product-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section id="careers">
+  <div class="section-inner">
+    <div class="section-eyebrow">Careers</div>
+    <h2 class="section-title">Join the rhythm</h2>
+    <div class="careers-layout">
+      <div class="careers-left">
+        <p class="section-body">We're a team of builders, designers, and dreamers who believe work should be meaningful. We offer the autonomy to own your craft and the support to grow beyond it.</p>
+        <div class="careers-perks">
+          <div class="perk">
+            <div class="perk-icon">🏠</div>
+            <div class="perk-text"><h4>Remote-First Culture</h4><p>Work from anywhere. Serious async infrastructure included.</p></div>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">📈</div>
+            <div class="perk-text"><h4>Equity for Everyone</h4><p>All full-time employees receive meaningful equity grants.</p></div>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">🎓</div>
+            <div class="perk-text"><h4>Learning Budget</h4><p>₹1,50,000 / year for courses, conferences, and books.</p></div>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">🏥</div>
+            <div class="perk-text"><h4>Health & Wellness</h4><p>Comprehensive medical, dental, and mental-health cover.</p></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="job-list">
+          <div class="job-card" onclick="openModal('Senior Product Designer', 'Product · Remote')">
+            <div class="job-info">
+              <h4>Senior Product Designer</h4>
+              <div class="job-meta">
+                <span class="tag">Product</span>
+                <span class="tag remote">Remote</span>
+              </div>
+            </div>
+            <a class="apply-btn" onclick="event.stopPropagation(); openModal('Senior Product Designer', 'Product · Remote')">Apply</a>
+          </div>
+          <div class="job-card" onclick="openModal('Staff Software Engineer – AI', 'Engineering · Hybrid')">
+            <div class="job-info">
+              <h4>Staff Software Engineer – AI</h4>
+              <div class="job-meta">
+                <span class="tag">Engineering</span>
+                <span class="tag hybrid">Hybrid</span>
+              </div>
+            </div>
+            <a class="apply-btn" onclick="event.stopPropagation(); openModal('Staff Software Engineer – AI', 'Engineering · Hybrid')">Apply</a>
+          </div>
+          <div class="job-card" onclick="openModal('Head of Marketing', 'Marketing · Mumbai HQ')">
+            <div class="job-info">
+              <h4>Head of Marketing</h4>
+              <div class="job-meta">
+                <span class="tag">Marketing</span>
+                <span class="tag">Mumbai HQ</span>
+              </div>
+            </div>
+            <a class="apply-btn" onclick="event.stopPropagation(); openModal('Head of Marketing', 'Marketing · Mumbai HQ')">Apply</a>
+          </div>
+          <div class="job-card" onclick="openModal('Enterprise Sales Manager', 'Sales · Remote')">
+            <div class="job-info">
+              <h4>Enterprise Sales Manager</h4>
+              <div class="job-meta">
+                <span class="tag">Sales</span>
+                <span class="tag remote">Remote</span>
+              </div>
+            </div>
+            <a class="apply-btn" onclick="event.stopPropagation(); openModal('Enterprise Sales Manager', 'Sales · Remote')">Apply</a>
+          </div>
+          <div class="job-card" onclick="openModal('Data Scientist – Analytics', 'Data · Hybrid')">
+            <div class="job-info">
+              <h4>Data Scientist – Analytics</h4>
+              <div class="job-meta">
+                <span class="tag">Data</span>
+                <span class="tag hybrid">Hybrid</span>
+              </div>
+            </div>
+            <a class="apply-btn" onclick="event.stopPropagation(); openModal('Data Scientist – Analytics', 'Data · Hybrid')">Apply</a>
+          </div>
+          <div class="job-card" onclick="openModal('Legal Counsel', 'Legal · Mumbai HQ')">
+            <div class="job-info">
+              <h4>Legal Counsel</h4>
+              <div class="job-meta">
+                <span class="tag">Legal</span>
+                <span class="tag">Mumbai HQ</span>
+              </div>
+            </div>
+            <a class="apply-btn" onclick="event.stopPropagation(); openModal('Legal Counsel', 'Legal · Mumbai HQ')">Apply</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <div class="section-eyebrow" style="color:#F5A623;">Contact</div>
+        <h2 class="section-title">Let's talk</h2>
+        <p class="section-body">Whether you're a potential partner, press, investor, or just curious — we'd love to hear from you.</p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-item-text"><h4>Headquarters</h4><p>Damru Tower, BKC, Mumbai 400051, India</p></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div class="contact-item-text"><h4>Email</h4><a href="mailto:hello@damru.com">hello@damru.com</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-item-text"><h4>Phone</h4><a href="tel:+912261234567">+91 22 6123 4567</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🌐</div>
+            <div class="contact-item-text"><h4>Global Offices</h4><p>Singapore · London · São Paulo · New York</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Riya Sharma" id="c-name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="riya@company.com" id="c-email">
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" placeholder="Partnership enquiry" id="c-subject">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us what's on your mind..." id="c-message"></textarea>
+        </div>
+        <button class="contact-submit" onclick="submitContact()">Send Message</button>
+        <div class="success-msg" id="contact-success">✅ Message sent! We'll get back to you within 1–2 business days.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-wrap">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="15" fill="#F5A623"/>
+            <ellipse cx="10" cy="16" rx="5" ry="8" fill="#1A1040" opacity="0.85"/>
+            <ellipse cx="22" cy="16" rx="5" ry="8" fill="#1A1040" opacity="0.85"/>
+            <rect x="14.5" y="8" width="3" height="16" rx="1.5" fill="#FAF8F4"/>
+          </svg>
+          <span>Damru</span>
+        </div>
+        <p>Rhythm of innovation. Building technology that moves the world forward — one beat at a time.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Products</h5>
+        <a href="#">Damru Connect</a>
+        <a href="#">Damru Pulse</a>
+        <a href="#">Damru Commerce</a>
+        <a href="#">Damru Shield</a>
+        <a href="#">Damru Cloud</a>
+        <a href="#">Damru AI</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#about">About Us</a>
+        <a href="#careers">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Investors</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Accessibility</a>
+        <a href="#">Security</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Damru Technologies Pvt. Ltd. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#">Twitter / X</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">GitHub</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Apply Now</h2>
+    <p class="modal-role" id="modal-role-title">Position · Department</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="Riya">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="Sharma">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="riya@example.com">
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" placeholder="+91 98765 43210">
+    </div>
+    <div class="form-group">
+      <label>LinkedIn Profile</label>
+      <input type="url" placeholder="https://linkedin.com/in/yourprofile">
+    </div>
+    <div class="form-group">
+      <label>Years of Experience</label>
+      <select>
+        <option>0 – 2 years</option>
+        <option>3 – 5 years</option>
+        <option>6 – 9 years</option>
+        <option>10+ years</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Why Damru?</label>
+      <textarea placeholder="Tell us what excites you about this role and our mission..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Resume / CV</label>
+      <div class="upload-area">
+        <p>📎 <strong>Click to upload</strong> or drag and drop your CV here</p>
+        <p style="margin-top:4px;font-size:0.76rem;">PDF, DOCX — max 5 MB</p>
+      </div>
+    </div>
+    <button class="form-submit" onclick="submitApplication()">Submit Application</button>
+    <div class="success-msg" id="apply-success">🎉 Application submitted! Our recruiting team will reach out within 5–7 business days.</div>
+  </div>
+</div>
+
+<script>
+  function openModal(role, dept) {
+    document.getElementById('modal-role-title').textContent = role + ' · ' + dept;
+    document.getElementById('applyModal').classList.add('active');
+    document.getElementById('apply-success').classList.remove('show');
+  }
+  function closeModal() {
+    document.getElementById('applyModal').classList.remove('active');
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('applyModal')) closeModal();
+  }
+  function submitApplication() {
+    document.getElementById('apply-success').classList.add('show');
+    setTimeout(closeModal, 2800);
+  }
+  function submitContact() {
+    document.getElementById('contact-success').classList.add('show');
+    document.getElementById('c-name').value = '';
+    document.getElementById('c-email').value = '';
+    document.getElementById('c-subject').value = '';
+    document.getElementById('c-message').value = '';
+  }
+  // Smooth active-link highlight on scroll
+  const sections = document.querySelectorAll('section[id], div.stats');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY + 80;
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      const sec = document.querySelector(a.getAttribute('href'));
+      if (sec && sec.offsetTop <= y && sec.offsetTop + sec.offsetHeight > y) {
+        a.style.background = 'var(--light)';
+        a.style.color = 'var(--indigo)';
+      } else {
+        a.style.background = '';
+        a.style.color = '';
+      }
+    });
+  });
+</script>
+</body>
+</html>
